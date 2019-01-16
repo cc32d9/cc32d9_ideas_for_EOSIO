@@ -1,0 +1,118 @@
+# Object Token
+
+Object Token is a kind of non-fungible token on EOS.
+
+The goal of this proposal is to resolve the following drawbacks of
+ERC721 and the NFT design for EOS
+(https://github.com/unicoeos/eosio.nft):
+
+* the NFT token contract assumes that the tokens are countable and are
+  of the same type (all Cryptokitties are served by one contract, all
+  objects of some other kind are served by a different contract), and
+  the user associates the name of the contract with the meaning of the
+  token.
+
+* The 64-bit identifier of NFT token is not linked with the token
+  contents, except in the contract memory.
+
+
+
+# Object nature
+
+Content of an object is understood as an abstract piece of data (most
+likely in JSON format) tha describes a virtual or physical object in the
+outside world.
+
+The content data is retrievable via one of P2P networks, such
+as IPFS or BitTorrent.
+
+The content must contain a cryptographic signature of its origin. This
+can be done in a form of PGP signed message, or an SSL-signed object,
+packed together with the certificate chain (feasibility and format yet
+to be identified).
+
+The Object Token smart contract is serving the following purposes
+related to the objects:
+
+* Ownership. Like any other token, every object belongs to one and only
+  one EOS account. Depending on real-world interpretation, this may mean
+  a legal ownership of a real property.
+
+* Authenticity. The smart contract provides the means for any external
+  party to verify the origin of an object.
+
+* Uniqueness. The smart contract guarantees that the same object would
+  not be duplicated and assigned to a different owner.
+
+
+
+# Object properties
+
+The properties of an object are immutable.
+
+* `id`: a 256bit integer equal to SHA256 of the object content;
+
+* `uri`: a link that identifies a way of retrieving the object content
+  (via IPFS or BitTorrent);
+
+* `origin`: a string that identifies a type of identity, and the
+  identity itself of the origin. For example,
+  `pgp:cc32d9@gmail.com#https://pgp.mit.edu/` identifies that my public
+  key may be found on a specified public key server.
+
+* `validatedby`: EOS account of a trusted entity that has validated the
+  object contents and properties.
+
+
+
+# Actions
+
+Action names are different from those of `eosio.token` by intent, as
+they have nothing to do with standard token operations.
+
+* `addvalidator(account)`: the contract owner assigns a number of
+  trusted validators for object contents.
+
+* `delvalidator(account)`: the contract owner can undelegate the
+  validation rights from an account. This is a disruptive operation, as
+  all objects that are validated will need re-validation by another
+  account. Until that happens, the objects are nontransferable.
+
+* `new(owner, id, uri, origin)`: the owner creates a new object, and
+  allocates RAM for it. Until the object is validated, it cannot be
+  transferred.
+
+* `validate(validator, id)`: the validator confirms that the object is
+  what it claims to be and its origin and signature are correct.
+
+* `move(from, to, id, memo)`: The owner transfers the ownership to
+  another account. This is analogous to `transfer` action in
+  `eosio.token`.
+
+* `destroy(owner, id)`: The owner can destroy the object at any time,
+  thus releasing the ownership.
+
+
+# Use cases
+
+All kinds of right to use can be implemented with the Object Token
+contract. The rights can be permanent or temporary, and they can span
+digital and real-life objects. Also PGP signature is something that is
+already recognized by legacy technology players, so it would simplify
+the adoption and integration into legal contracts.
+
+
+
+
+
+
+
+## Copyright and License
+
+Copyright 2019 cc32d9@gmail.com
+
+This work is licensed under a Creative Commons Attribution 4.0
+International License.
+
+http://creativecommons.org/licenses/by/4.0/
+
