@@ -17,7 +17,7 @@ ERC721 and the NFT design for EOS
 
 
 
-# Object nature
+## Object nature
 
 Content of an object is understood as an abstract piece of data (most
 likely in JSON format) tha describes a virtual or physical object in the
@@ -50,7 +50,7 @@ database, and there's a way to quickly verify its ownership in the
 blockchain.
 
 
-# Object properties
+## Object properties
 
 The properties of an object are immutable.
 
@@ -73,7 +73,7 @@ The properties of an object are immutable.
   transferable, and bit 1 allows destroying the object.
 
 
-# Actions
+## Actions
 
 Action names are different from those of `eosio.token` by intent, as
 they have nothing to do with standard token operations.
@@ -105,7 +105,7 @@ they have nothing to do with standard token operations.
   thus releasing the ownership.
 
 
-# Use cases
+## Use cases
 
 All kinds of right to use can be implemented with the Object Token
 contract. The rights can be permanent or temporary, and they can span
