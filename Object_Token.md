@@ -69,8 +69,17 @@ The properties of an object are immutable.
 * `validatedby`: EOS account of a trusted entity that has validated the
   object contents and properties.
 
-* `flags`: a 16-bit integer: bit 0 indicates if the object is
-  transferable, and bit 1 allows destroying the object.
+* `options`: a 64-bit integer. Bits 0 to 16 indicate flags, bits 32 to 63 supply an optional value.
+
+  * Bit 0: indicates if the object is transferable;
+
+  * Bit 1: allows destroying the object by owner;
+
+  * Bit 2: allows destroying the object by origin's owner;
+
+  * Bit 3: sets expiration for an object. Expired object can be
+    eventually erased from RAM. The bits 32-63 contain the expiration
+    point in time in hours since Unix Epoch.
 
 
 ## Actions
@@ -101,8 +110,10 @@ they have nothing to do with standard token operations.
   another account. This is analogous to `transfer` action in
   `eosio.token`.
 
-* `destroy(owner, id)`: The owner can destroy the object at any time,
-  thus releasing the ownership.
+* `destroy(account, id)`: The owner or the origin creator can destroy
+  the object at any time, provided that corresponding flags are set in
+  th options field.
+  
 
 
 ## Use cases
