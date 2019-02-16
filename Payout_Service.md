@@ -23,6 +23,12 @@ The `regschedule` action creates a new schedule ID which is derived from
 first 48 bits of the transaction ID.
 
 
+## Deposit
+
+The payer transfers a deposit to the smart contract, indicating the
+schedule ID in memo. The smart contract accepts the deposits from
+anyone, as long as the schedule ID and currency are valid.
+
 
 ## Hourly schedule
 
@@ -68,7 +74,10 @@ the maximum possible value for a 64-bit integer, the only way to
 continue for the payee is to delete their account from the schedule and
 start a new counter.
 
-
+The currency contract must implement the standard `accounts` table that
+is compatible with `eosio.token` ABI. If the smart contract is unable to
+read the payer's balance from `accounts` table, the `regschedule` action
+would fail.
 
 
 
