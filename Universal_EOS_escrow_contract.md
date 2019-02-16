@@ -1,5 +1,8 @@
 # Universal EOS escrow contract
 
+EDIT: the idea is partially implemented in
+https://github.com/eos-geneva/escrowescrow
+
 This is an idea for a future project. An EOS contract that will allow
 setting up the deals between sponsors and contractors in any EOS
 currency.
