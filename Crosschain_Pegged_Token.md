@@ -180,6 +180,13 @@ Once the due amount of rewards reaches a certain threshold, the oracles
 are free to stop serving the TOKEN at their own discretion.
 
 
+## TO DO
+
+TOKEN issuer needs to replenish RAM in gateway contracts. Need a mechanism for that.
+
+To avoid abuse, the gateways should limit repetitive transfers by the
+same users: a user may send the same amount back and forth and generate
+income for the oracles.
 
 
 
