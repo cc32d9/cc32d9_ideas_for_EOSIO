@@ -42,6 +42,9 @@ certain quorum of oracles before accepting an event. If any of oracles
 is sending a different version of an event than others, the event is
 blocked and escalated for human intervention.
 
+A new permission called `oracle` is defined for oracles to send their
+inputs. As the privates keys have to be stored on the servers, they
+should be different from `active` and `owner` keys.
 
 ## Pairing user accounts
 
@@ -53,7 +56,9 @@ time gap between `pair` actions in both networks.
 `telos:alice` and `mainnet:alice` are sending `pair` action to the
 gateway contract, indicating the account name in the counterpart
 network. The gateway contracts create pairing entries with status
-"pending".
+"pending". The pairing entries have also fields for keeping track of one
+pending transfer: status flag, currency and amount. The user pays for
+this RAM.
 
 Oracles wait for these actions to appear in irreversible blocks in both
 networks, and then send `ackpair` action indicating the pair of account
@@ -77,6 +82,26 @@ contract on the other side.
 
 Only token transfers from known accounts in "established" state are
 accepted by gateway contract, and all other transfers are rejected.
+
+
+## Opening accounts
+
+The user needs to pay for RAM needed by token balance on each side of
+the gateway.
+
+The gateway contract keeps a record of which currencies Alice is willing
+to transfer.
+
+If `telos:alice` does not have TOKEN on her balance, she needs to send
+`open` to the TOKEN contract or have someone transfer some amount of
+TOKEN to her.
+
+`mainnet:alice` needs to send `open` action to TOKENPEG contract.
+
+`telos:alice` and `mainnet:alice` send `wantcurrency` action to the
+gateway contracts indicating the corresondinhg token contract and
+symbol. The gateway contract verifies that the they have a balance entry
+in the token contracts.
 
 
 ## Initial state
@@ -105,8 +130,9 @@ She makes a normal `transfer` of TOKEN to `telos:mainnetgw` with
 arbitrary memo string.
 
 `telos:mainnetgw` verifies that Alice has "established" pairing status
-and that the transfer is in accepted currency. It creates an entry in
-pending payments table.
+and that the transfer is in accepted currency. It registers the payment
+in Alice's pairing entry as a pending payment. Only one pending payment
+is allowed for a user at a time.
 
 Oracles wait for the transfer transaction to appear in irreversible
 block, and send `startxfer` actions to `mainnet:telosgw`, indicating the
@@ -165,28 +191,27 @@ section, with the following exceptions:
 
 
 
-## Incentives for oracles
+## Costs and rewards
 
-`telos:gwrewards` is a smart contract that keeps track of rewards for
-oracles that submitted `startxfer` and `okxfer` for successful
-transactions. The rewards are calculated in TOKEN at a predefined rate,
-proportional to the amount of transfer.
+The organization behind TOKEN is primarily interested in flawless work
+of the gateway, and it is responsible for covering the operational
+costs. The users do not pay any transaction fees.
 
-The issuer of TOKEN is responsible to pay the rewards to oracles. It
-sends the token to `telos:gwrewards` and the contract sends it further
-toward the oracles, proportionally to their due amount.
+The operational costs comprise of the following components:
 
-Once the due amount of rewards reaches a certain threshold, the oracles
-are free to stop serving the TOKEN at their own discretion.
+* one-time RAM costs for deploying the contracts;
 
+* support team developing the service, fixing problems, and interviening
+  in case of oracles misagreements;
 
-## TO DO
+* Oracles hosting and operation.
 
-TOKEN issuer needs to replenish RAM in gateway contracts. Need a mechanism for that.
+The gateway maintainer defines a monthly budget to support the
+infrastructure, and TOKEN organization is to support the operational
+costs.
 
-To avoid abuse, the gateways should limit repetitive transfers by the
-same users: a user may send the same amount back and forth and generate
-income for the oracles.
+The payment for oracles is a fixed monthly amount distributed among
+oracles proportionally to their successful transactions.
 
 
 
