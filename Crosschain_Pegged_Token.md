@@ -3,6 +3,33 @@
 This is a concept for extending the liquidity of a token actoss multiple
 EOSIO blockchains.
 
+## Comparing to BOS IBC
+
+BOCORE team has released an inter-blockchain communication solution that
+is designed to have seamless token transfers between two networks:
+https://github.com/boscore/Documentation/tree/master/IBC
+
+BOS IBC requires dedicated servers running nodeos software with the IBC
+plugin, and these nodes are not suitable for anything else, like API
+service. Our proposed solution needs nodeos servers with State History
+Plugin enabled, and these servers can be used for other purposes.
+
+BOS IBC requires a substantial amount of RAM in IBC contracts (15 or
+more megabytes, which is about $3500 in current prices on EOS
+mainnet. Our solution requires few hundred kilobytes of RAM for contract
+deployment.
+
+BOS IBC software is huge, and costly to maintain. A developer needs to
+spend a significant amount of time in order to be able to support or
+troubleshoot the software.
+
+BOS IBC performs a deep verification of transaction eventts, whereas our
+solution is based on a consensus of multiple independent oracles.
+
+BOS IBC requires that the token has the same symbol in both
+networks. Our solution does not have such limitation.
+
+
 
 ## Accounts and tokens
 
@@ -33,7 +60,15 @@ networks.
 networks. Server-side oracle tools are pushing transactions using these
 accounts.
 
+
 ## Oracles and quorum
+
+The solution relies on a number of independent oracles that process
+events from the blockchain and submit the evidence to the gateway
+contracts. Oracles are selected so that independent teams are operating
+them. There are more oracles than it is required by quorum, and they
+compete to submit their input as fast as possible, in order to earn the
+rewards.
 
 Each action on gateway contracts which is based on an event in
 counterpart network is submitted by oracles. Each oracle account submits
@@ -213,6 +248,20 @@ costs.
 The payment for oracles is a fixed monthly amount distributed among
 oracles proportionally to their successful transactions.
 
+
+# Development costs
+
+Development costs are estimated as follows:
+
+* Programming and testing the gateway smart contract: US$3000.
+
+* Programming the oracle software, based on Chronicle output: US$3000.
+
+* Web UI programming: US$2000.
+
+* End-to-end testing: US$2000.
+
+Total budget: US$10,000.
 
 
 ## Copyright and License
