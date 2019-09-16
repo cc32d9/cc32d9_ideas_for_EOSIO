@@ -6,7 +6,7 @@ time to implement.
 
 ## WordProof timestamps
 
-As of commit `996577c652755a51a6470f5d1a873eb2668b02a1`:
+As of commit `996577c652755a51a6470f5d1a873eb2668b02a1` on `Fri Aug 9 20:33:18 2019 +0000`:
 
 * [Crosschain_Pegged_Token.md](https://telos.bloks.io/transaction/ed6bcfe02e9100b11c8cee71a9c5cce2f91a5ab709c357ef1c5230cdf6c6522e)
 
