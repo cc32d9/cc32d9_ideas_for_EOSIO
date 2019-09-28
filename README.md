@@ -15,7 +15,13 @@ As of commit `996577c652755a51a6470f5d1a873eb2668b02a1` on `Fri Aug 9 20:33:18 2
 * [Payout_Service.md](https://telos.bloks.io/transaction/99731c62deb834082506232ca38c80cfc70b149c6648409c7ffa1185adb15d22)
 
 
+As of commit `53d2ae23606d79e74b8a88ec5f4ce78115abc1a1` on `Sat Sep 28 22:21:36 2019 +0000`:
 
+* [cc32d9_20190927-01_Telos_WP_Work_Submission_And_Approval_SC.pdf](https://telos.bloks.io/transaction/05cb29166b22c9770f78f7c667a89fae57708f7f08386c7c642755acb452d235)
+
+* [cc32d9_20190927-02_Telos_WP_Community_Membership_SC.pdf](https://telos.bloks.io/transaction/1162af5f53b4bf0ecbed350c6daf9a77f891df808fc7b0e5f398f5417d35ed76)
+
+* [cc32d9_20190927-03_Telos_WP_Mutual_Agreements_SC.pdf](https://telos.bloks.io/transaction/bb8ca36ba3280b0e8465c7c0064a41efff715527e75493570581549fcb19b55b)
 
 ## Copyright and License
 
