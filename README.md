@@ -23,6 +23,12 @@ As of commit `53d2ae23606d79e74b8a88ec5f4ce78115abc1a1` on `Sat Sep 28 22:21:36 
 
 * [cc32d9_20190927-03_Telos_WP_Mutual_Agreements_SC.pdf](https://telos.bloks.io/transaction/bb8ca36ba3280b0e8465c7c0064a41efff715527e75493570581549fcb19b55b)
 
+
+As of commit `ebb293ac8c59956d26066b51c28481625c315674` on `Thu Apr 30 21:55:53 2020 +0000`:
+
+* [X509_Certificates_as_EOSIO_id.md](https://telos.bloks.io/transaction/9027e6dfd4bcee2614d08ac6406c51113d26268ddd182286167e1815261f8a90)
+
+
 ## Copyright and License
 
 Copyright 2018 cc32d9@gmail.com
