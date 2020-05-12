@@ -29,6 +29,11 @@ As of commit `ebb293ac8c59956d26066b51c28481625c315674` on `Thu Apr 30 21:55:53 
 * [X509_Certificates_as_EOSIO_id.md](https://telos.bloks.io/transaction/9027e6dfd4bcee2614d08ac6406c51113d26268ddd182286167e1815261f8a90)
 
 
+As of commit `551f72326ab166f9a611ccf6478a4e6157695817` on `Tue May 12 23:02:43 2020 +0000`:
+
+* [COVID-19_immunity_passports.md](https://telos.bloks.io/transaction/298c7356ecf2413c7cc3174e87068a1d664899d1686750172369d8234633489b)
+
+
 ## Copyright and License
 
 Copyright 2018 cc32d9@gmail.com
