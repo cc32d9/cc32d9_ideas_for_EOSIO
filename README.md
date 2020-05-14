@@ -29,6 +29,11 @@ As of commit `ebb293ac8c59956d26066b51c28481625c315674` on `Thu Apr 30 21:55:53 
 * [X509_Certificates_as_EOSIO_id.md](https://telos.bloks.io/transaction/9027e6dfd4bcee2614d08ac6406c51113d26268ddd182286167e1815261f8a90)
 
 
+As of commit `08fe07f63b0d17ca8a36cef5afa3e4454bb565b7` on `Thu May 14 22:48:07 2020 +0000`:
+
+* [Attestations_on_Blockchain.md](https://telos.bloks.io/transaction/85200ca7dbafb24f9e4d1fa2c04aad26108b33315314b4880ebcce96c06f0230)
+
+
 
 ## Copyright and License
 
