@@ -34,6 +34,9 @@ As of commit `08fe07f63b0d17ca8a36cef5afa3e4454bb565b7` on `Thu May 14 22:48:07 
 * [Attestations_on_Blockchain.md](https://telos.bloks.io/transaction/85200ca7dbafb24f9e4d1fa2c04aad26108b33315314b4880ebcce96c06f0230)
 
 
+As of commit `51fe6d0afd2ce617551baf071b5662e0732cd465` on `Thu Jun 18 22:35:58 2020 +0000`:
+
+* [Enterprise_Privacy_on_EOSIO.md](https://telos.bloks.io/transaction/267516fda2c880364599ad1149d769251f1e7cb46b33e74da1ae44d812d53037)
 
 ## Copyright and License
 
