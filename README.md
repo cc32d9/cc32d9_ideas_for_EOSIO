@@ -38,6 +38,12 @@ As of commit `51fe6d0afd2ce617551baf071b5662e0732cd465` on `Thu Jun 18 22:35:58 
 
 * [Enterprise_Privacy_on_EOSIO.md](https://telos.bloks.io/transaction/267516fda2c880364599ad1149d769251f1e7cb46b33e74da1ae44d812d53037)
 
+
+As of commit `0cf7f32f467ca643a4f90e3c2ff795be16df4f15` on `Wed Jun 24 00:34:27 2020 +0200`:
+
+* [Enterprise_Privacy_on_EOSIO.md](https://telos.bloks.io/transaction/87e7a1bcbd2641a2bc643ded90ed6c119d1d251ef4be5e85fd1fa2291c00c8ff)
+
+
 ## Copyright and License
 
 Copyright 2018 cc32d9@gmail.com
