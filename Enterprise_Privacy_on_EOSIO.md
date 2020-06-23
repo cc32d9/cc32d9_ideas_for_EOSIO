@@ -308,6 +308,49 @@ the following distinctive properties:
 
 
 
+## Temporary workaround for transactional layer
+
+As Alexandre Bourget suggested, while we don't have a multi-chain
+nodeos yet, a temporary workaround could be set up: each private
+blockchain would require its own nodeos process, and an orchestration
+manager would start and maintain them automatically.
+
+One of the problems in this setup would be the scalability of P2P
+protocol: each nodeos would need a dedicated TCP port, and the
+orchestration engine would need to interconnect TCP sockets of
+potentially thousands of instances across hundreds of hosts, still
+maintaining security and access separation.
+
+A gossip protocol manager simulating a p2p node would partially solve
+the problem, but still there's an issue of hundreds or thousands of
+TCP sockets and a guarantee that only right peers connect to right
+counterparts.
+
+So, to my view, the best approach would be a separate nodeos plugin
+that allows interchanging speculative transactions and signed blocks,
+using a third-party transport mechanism, such as one described in
+Transport layer section.
+
+Also a new plugin for nodeos can implement blocks on demand: it would
+pause the production until there's a transaction in the queue. This
+seems to be feasible without changes in the core EOSIO software.
+
+
+## Short-living blockchains
+
+One of interesting side effects of this design is that it allows easy
+creation of short-living blockchains. Such blockchains could be
+limited by a real-world interaction, such as limited-term
+contracts. For example, each container shipment is a separate chain of
+events, and it doesn't need to be related to other chains of events.
+
+Such short-life blockchains have a benefit of easy archiving and fast
+replaying. Also they are potentially suitable for harsh environments,
+such as space satellites, where storage and CPU resources are scarce,
+so they need to be only utilized for what is needed for a particular
+business process.
+
+
 
 
 ## Copyright and License
