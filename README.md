@@ -43,10 +43,15 @@ As of commit `0cf7f32f467ca643a4f90e3c2ff795be16df4f15` on `Wed Jun 24 00:34:27 
 
 * [Enterprise_Privacy_on_EOSIO.md](https://telos.bloks.io/transaction/87e7a1bcbd2641a2bc643ded90ed6c119d1d251ef4be5e85fd1fa2291c00c8ff)
 
+As of commit `1c9a505f79a6e2c1f9fde2cfefbe40da5a0704a0` on `Fri Jul 24 01:04:28 2020 +0200`:
+
+* [Anonymous_Voting_on_Blockchain.md](https://telos.bloks.io/transaction/a84a654ba0ea972866590336fa97a3f248fc0a54aad7a1b3a12403326cf413f5)
+
+
 
 ## Copyright and License
 
-Copyright 2018 cc32d9@gmail.com
+Copyright 2018-2020 cc32d9@gmail.com
 
 This work is licensed under a Creative Commons Attribution 4.0
 International License.
