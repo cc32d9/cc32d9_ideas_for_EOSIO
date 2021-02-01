@@ -72,6 +72,11 @@ integration with popular e-commerce platforms, mobile wallets, and
 ready-to-deploy web shop packages.
 
 
+## Enterprise privacy solution for EOSIO
+
+I wrote a [design draft](Enterprise_Privacy_on_EOSIO.md) for a
+scalable enterprise-grade blockchain solution. The implementation
+requires approximately 300 man-days.
 
 
 
