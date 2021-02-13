@@ -79,9 +79,19 @@ scalable enterprise-grade blockchain solution. The implementation
 requires approximately 300 man-days.
 
 
+## Distributed file and data storage
 
+EOSIO version 2.1 introduces a new backend database (RocksDB) for
+smart contract RAM, which opens up a new possibility for data
+scaling. The node servers don't need to map all contract RAM into
+physical RAM any more.
 
-
-
+The idea is to build a set of tools and smart contracts that enable
+anyone to spin up a distributed storage solution. Apart from API and
+front-end libraries, it should offer a financial model for charging
+the users for their storage usage and maintaining the infrastructure
+costs. It should also provide the means for controlling the data
+authenticity, integrity, optional revision control, and content
+indexing.
 
 
