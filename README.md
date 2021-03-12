@@ -1,14 +1,14 @@
 # Ideas and designs for EOS
 
-This is a collection of my ideas and designs for blockhain
-siftware. mostly based in EOSIO blockchain.
+This is a collection of my ideas and designs for EOSIO blockhain
+applications.
 
 Each design is placed in a separate document in this repository.
 
 
 ## Blockchain timestamps
 
-The below listed transactions are timestamping the documents in this
+The transactions listed below are timestamping the documents in this
 repository.
 
 
