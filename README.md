@@ -1,10 +1,17 @@
 # Ideas and designs for EOS
 
-This is a collection of raw ideas and designs that I couldn't find the
-time to implement.
+This is a collection of my ideas and designs for blockhain
+siftware. mostly based in EOSIO blockchain.
+
+Each design is placed in a separate document in this repository.
 
 
-## WordProof timestamps
+## Blockchain timestamps
+
+The below listed transactions are timestamping the documents in this
+repository.
+
+
 
 As of commit `996577c652755a51a6470f5d1a873eb2668b02a1` on `Fri Aug 9 20:33:18 2019 +0000`:
 
@@ -51,7 +58,7 @@ As of commit `1c9a505f79a6e2c1f9fde2cfefbe40da5a0704a0` on `Fri Jul 24 01:04:28 
 
 ## Copyright and License
 
-Copyright 2018-2020 cc32d9@gmail.com
+Copyright 2018-2021 cc32d9@gmail.com
 
 This work is licensed under a Creative Commons Attribution 4.0
 International License.
