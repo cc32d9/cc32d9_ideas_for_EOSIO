@@ -55,6 +55,10 @@ As of commit `1c9a505f79a6e2c1f9fde2cfefbe40da5a0704a0` on `Fri Jul 24 01:04:28 
 * [Anonymous_Voting_on_Blockchain.md](https://telos.bloks.io/transaction/a84a654ba0ea972866590336fa97a3f248fc0a54aad7a1b3a12403326cf413f5)
 
 
+As of commit `7e41a11b4031f904fe31e02421d2a57cdc66aa5a` on `Fri Mar 12 23:59:35 2021 +0100`
+
+* [Temporary_history_in_contract_tables.md](https://wax.bloks.io/transaction/3b16703338a0c434696f222fd9c7f3f5d6a5478bec0cc50edfcf02459ade1dd4)
+
 
 ## Copyright and License
 
