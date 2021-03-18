@@ -95,3 +95,10 @@ authenticity, integrity, optional revision control, and content
 indexing.
 
 
+## Smart contract development guide
+
+A book describing the smart contract development, from basics of EOSIO
+blockchain operation, to design patterns and architecture
+considerations. Approximately 500 working hours.
+
+
