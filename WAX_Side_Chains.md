@@ -4,6 +4,11 @@ The design described in this document is applicable to any other
 public EOSIO blockchain. But WAX is the first place where it's
 actually needed.
 
+Back in 1999, Alexandre Bourget and others have published (an EEP for
+EOS Mainnet
+Extensions)[https://github.com/EOSIO/EEPs/blob/master/EEPS/eep-6.md]. Some
+ideas in this proposal are overlapping with that document.
+
 ## Current state of WAX blockchain
 
 WAX is a public blockchain using a slightly modified EOSIO software
