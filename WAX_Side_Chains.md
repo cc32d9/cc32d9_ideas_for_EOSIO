@@ -97,8 +97,8 @@ or speculative token.
 ### Purchasing a resource
 
 The WAX user that needs to purchase a resource on the sidechain
-interacts with the payment gateway contract, such as (POS contract
-made by me)[https://github.com/cc32d9/eosio_point_of_sale/], and
+interacts with the payment gateway contract, such as [POS contract
+made by me](https://github.com/cc32d9/eosio_point_of_sale/), and
 receives a resource token that can only be spent on particular
 sidechain resource. The user interacts with the resource management
 contract and indicates which sidechain accounts should receive the
@@ -125,8 +125,8 @@ separately:
   require also that network latency is within certain limits, so in
   some cases the production servers should reside within the same
   continent, following major Internet backbone destinations. As I have
-  shown (in an
-  article)[https://cc32d9.medium.com/running-a-small-eosio-network-22506468cd02],
+  shown [in an
+  article](https://cc32d9.medium.com/running-a-small-eosio-network-22506468cd02),
   a chain of 5 producers tolerates an outage of only one of them. A
   network of 9 producers would still be alive if two producers go
   offline.
@@ -179,7 +179,7 @@ changed in vanilla system contracts.
 There are several approaches to introducing transaction fees in an
 EOSIO blockchain. To name a few,
 
-* (FIO)[https://github.com/fioprotocol] is running a heavily
+* [FIO](https://github.com/fioprotocol) is running a heavily
   customized version of nodeos. Also it's an application-specific
   network, so only the system contracts are allowed. Each of system
   actions has an associated price factor, and the final price is
@@ -188,12 +188,12 @@ EOSIO blockchain. To name a few,
   costs on their side, disallowing the chain to charge more than
   expected.
 
-* (Letting the contracts access the resource
-  usage)[https://github.com/EOSIO/eos/issues/9853]. This option needs
+* [Letting the contracts access the resource
+  usage](https://github.com/EOSIO/eos/issues/9853). This option needs
   a feasibility research.
 
-* (Setting the replenishing window to
-  infinity)[https://github.com/EOSIO/eos/issues/9376]. The change
+* [Setting the replenishing window to
+  infinity](https://github.com/EOSIO/eos/issues/9376). The change
   itself is not difficult, but implications need to be researched.
 
 
