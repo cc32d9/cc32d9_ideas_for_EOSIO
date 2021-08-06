@@ -4,7 +4,7 @@ The design described in this document is applicable to any other
 public EOSIO blockchain. But WAX is the first place where it's
 actually needed.
 
-Back in 1999, Alexandre Bourget and others have published [an EEP for
+Back in 2019, Alexandre Bourget and others have published [an EEP for
 EOS Mainnet
 Extensions](https://github.com/EOSIO/EEPs/blob/master/EEPS/eep-6.md). Some
 ideas in this proposal are overlapping with that document.
@@ -80,11 +80,55 @@ A sidechain may also choose to synchronize only a subset of WAX
 accounts. For example, only owners of a certain NFT or fungible token
 would be allowed to operate. Although this would save on system
 resources, it reduces the transparency and makes uniform front-end
-operation difficult.
+operation more complex. The system should be able to utilize any
+existing information on WAX as a filtering criteria, such as:
+
+* fungible or non-fungible token ownership;
+
+* account permission with a specific name;
+
+* account names from certain realms (such as `*.wam`).
+
+The filter should also allow two ways of dealing with the accounts
+that fell off the filtering criteria:
+
+* keep them in the system and keep synchronizing their permissions;
+
+* nullify their permissions on the side chain.
+
 
 Contracts and memory content should not be automatically mirrored to
 the sidechain. The contract owners should buy the sidechain resources
 and deploy their applications according to their needs.
+
+
+## Location service
+
+The sidechain infrastructure should provide a uniform way for wallets
+and dapps to find relevant information in order to auto-configure
+themselves.
+
+The location service should provide the following information:
+
+* Chain name: a valid EOSIO name of up to 12 characters long.
+
+* Chain ID: sha256 hash of the genesis.
+
+* Link to the founding documentation, terms and conditions.
+
+* Whether the sidechain imports all accounts, and the filtering criteria.
+
+* A copy of genesis JSON file.
+
+* Link to a listing of public API endpoints, such as P2P, nodeos API,
+  history API, and other APIs like Atomic Assets.
+
+* Billing information: resource prices and the way to purchase them,
+  in some formalized and machine-readable way.
+
+
+Listing of public endpoints can be implemented in a smart contract
+where service providers would edit the records for their own services.
 
 
 
@@ -250,6 +294,20 @@ still be able to reuse the core components for gatewaying and billing.
   limits.
 
 
+## Use cases
+
+* A blockchain dedicated to a game or some other high-traffic
+  application: transactions are frequent and bulky, and probably it's
+  not important to keep them forever. The blockchain can define a
+  rotation period, and all history solutions would only be indexing
+  for a certain time interval.
+
+* A blockchain dedicated to an application requiring large amounts of
+  RAM.
+
+* Archival blockchain: transactions would be relatively expensive, but
+  the blockchain would guarantee long-term durability. This kind of
+  service could be of demand for financial applications.
 
 
 
