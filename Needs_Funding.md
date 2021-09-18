@@ -79,26 +79,22 @@ scalable enterprise-grade blockchain solution. The implementation
 requires approximately 300 man-days.
 
 
-## Distributed file and data storage
+## Software suite for exchanges
 
-EOSIO version 2.1 introduces a new backend database (RocksDB) for
-smart contract RAM, which opens up a new possibility for data
-scaling. The node servers don't need to map all contract RAM into
-physical RAM any more.
-
-The idea is to build a set of tools and smart contracts that enable
-anyone to spin up a distributed storage solution. Apart from API and
-front-end libraries, it should offer a financial model for charging
-the users for their storage usage and maintaining the infrastructure
-costs. It should also provide the means for controlling the data
-authenticity, integrity, optional revision control, and content
-indexing.
+Exchanges are implementing their own solutions for accepting deposits
+and sending withdrawals, and we've seen various issues with
+them. There needs to be an open-source, validated software suite that
+exchanges can take and integrate in their processes without having to
+reinvent everything.
 
 
-## Smart contract development guide
+## Node planning and installation guides
 
-A book describing the smart contract development, from basics of EOSIO
-blockchain operation, to design patterns and architecture
-considerations. Approximately 500 working hours.
+A detailed guideline is needed for node operators, covering such
+topics as functionality and performance planning, server resources,
+and daily administrative tasks. It should also cover specifics of
+biggest public chains, such as EOS or WAX. Also ready-made scenarios
+that implement best practices proven by experienced engineers.
+
 
 
