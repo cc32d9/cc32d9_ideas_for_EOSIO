@@ -7,162 +7,102 @@ Protocol](https://developers.eos.io/welcome/latest/protocol-guides/consensus_pro
 for details). This results in about 2 minutes finality in a network
 with 21 active producers.
 
-This document is an early design draft that proposes a consensus
-algorithm with a much shorter finality (a matter of 1 second if no
-network perturbation occurs), while keeping Byzantine fault tolerance
-(surviving up to 1/3-1 of active block producers acting randomly or
-abusively).
+This document is an early design draft that proposes an implementation
+of a new consensus algorithm with a much shorter finality (a matter of
+approximately 1 second if no network perturbation occurs), while keeping Byzantine
+fault tolerance (surviving up to 1/3-1 of active block producers
+acting randomly or abusively).
+
+ClarionOS team has published an [enhancement for the consensus
+algorithm](https://edenos.notion.site/Fixing-Consensus-and-Improving-Irreversibility-44b3e92abeca4da0a07c0167287a6945),
+and this document covers its application to EOSIO blockchain.
 
 
-## New p2p messages
+## New protocol message: Block confirmation
 
-The following new p2p protocol messages need to be defined:
+A new message type is defined: Block confirmation. An active block
+producer confirms validity of a block, sending its height, hash,
+confirming producer account name and a signature of the above.
 
-* Block confirmation: an active block producer confirms the validity
-  of a block, sending its number, hash, and a signature of the above.
+Upon receiving the message via p2p interface, every node verifies its
+validity:
 
-* Block finality: an active block producer is sending a list of
-  collected confirmations in a single message. A copy of this message
-  is also stored in blocks log.
+ * signor is an active block producer;
+ * signor hasn't confirmed this block height previously;
+ * the signature matches the producer's block signing key.
 
-* Conflict signaling and resolution proposal: a block producer is
-  indicating that there is a tie between several versions of a block,
-  and suggests one version as the valid one. The message contains the
-  block number, copies of collected confirmations, and a proposal for
-  the final block variant.
+Once the message is received and validated, it's stored in the blocks
+log alongside the blocks. This needs a change in blocks log format.
+
+Each node keeps all recent confirmations in memory until the
+corresponding blocks are recognized as final.
+
+A block signed is treated as an implicit confirmation by the block
+signor.
 
 
 ## Consensus protocol
 
-Once a BP signs and broadcasts a new block, all other active producers
-evaluate and confirm it, broadcasting the confirmation message. The
-message is short, comparing to a typical block length, so it will not
-generate too much traffic overhead.
+An active BP signs and broadcasts a new block. Other active producers,
+once they receive it, validate it and proceed as follows:
 
-1/3 of active producers that are next in the schedule after the
-currently producing one are collecting the confirmation
-messages. Whenever any of them collects 2/3+1 confirmations, it
-broadcasts a block finality message. At this point, the block is
-declared as irreversible.
+* if it's the first occurrence of a block at this height, broadcast a
+  confirmation message.
 
-Microforks are not uncommon in EOSIO networks, and they are usually
-caused by double producing (the same BP having two servers signing the
-blocks), or by a too long internet traversal time between the
-producers, so that the last block in the schedule is overwritten by
-the next producer.
+* if a block at this height is already seen, adopt it as the current
+  head block, but do not send any confirmation. The previous version
+  of a block is stored in a temporary cache.
 
-In case of a microfork, multiple versions of a block with a given
-number are broadcast throughout the p2p network.
-
-Confirmation messages must be issued according to the following rules:
-
-* if it's the first seen version of a block with specific number, the
-  BP is sending a confirmation immediately.
-
-* if it's a new version for a block that was already seen, and it's
-  signed by the same producer, ignore the block and skip the
-  confirmation.
-
-* if it's a new version for an already seen block, but the signing
-  producer is next down the schedule, send out a confirmation
-  immediately. The previous confirmation becomes invalid, and all
-  nodes must reject the old confirmation message if it arrives from a
-  peer.
-
-* a conflict signaling message resets the previous knowledge about
-  confirmations for the given block. The node reacts this way on only
-  the first received conflict signaling message, and ignores
-  subsequent copies.
-
-All p2p nodes in the network should validate if the received
-confirmation adheres to these rules, and drop it if it violates the
-rules.
-
-If one of versions collected 2/3+1 confirmations, it is automatically
-declared as final, and other versions are discarded. Every of 1/3
-producers down the schedule broadcasts a finality message for this
-block.
-
-Every node in p2p network validates incoming finality messages: the
-block hash must already be known, and there must be at least 2/3+1
-signatures of active producers for the hash.
-
-It may happen that neither of versions has got enough confirmations
-for a quorum. For example, in a network with 21 active producers, two
-versions may collect 9 and 12 confirmations. In this case, every
-producer of the next 1/3 producers in the schedule will issue a
-conflict signaling message, indicating which version collected more
-confirmations. If multiple versions are available with the same number
-of confirmations, the numerically highest block hash is picked as a
-proposed candidate: bytes of the hash are compared as big-endian
-256-bit integers, meaning the first bytes of the hashes are compared
-first, and if they are equal, the second bytes are compared, and so
-on.
-
-A hold-back time is defined, during which the confirmations are
-accepted after the block was broadcast. After this timeout, the
-conflict resolution proposal is issued even if some confirmations are
-missing. For example, hold-back time is defined as 3 seconds, and one
-out of 21 block producers has not sent a confirmation, and the network
-receives 10 confirmations for one block variant and 10 for the
-other. After 3 seconds of block signing, a conflict resolution is
-proposed, based on collected confirmations.
-
-It may happen that a confirmation gets delayed because of network
-congestion and geographical distance (or part of the network acting
-maliciously), and reaches other block producers when a conflict
-resolution message is already generated. In this case, if the conflict
-resolution proposal conflicts with this late confirmation, the
-proposal takes precedence.
-
-Producers will receive the conflict signaling message and re-generate
-the confirmations for the proposed block. Once 2/3+1 confirmations is
-available, the block becomes irreversible.
-
-The finality messages are stored by the nodes in their block
-logs. Also whenever a remote peer is syncing against a local node,
-the node must send the finality messages alongside the blocks as they
-appear in the blocks log.
-
-While finality message is being produced, the current active block
-producer keeps signing new blocks, using the last block that it
-confirmed as parent.
-
-Every node in the network (both producing and non-producing nodes)
-maintains its local chain of reversible blocks that stems from the
-block that the node would confirm according to the confirmation
-rules. The nodes also store local copies of fork variants without
-evaluating them, until they can be discarded upon reaching the
-finality. Once the parent block changes, the node re-evaluates the new
-reversible chain by rolling back the state up to the grandparent of
-the new parent.
-
-The parent block may change as a consequence of the following events:
-
-* next producer in schedule has signed a block with an already seen
-  number;
-
-* conflict resolution process has elected a block different from
-  currently known parent.
+Once a block X has got 2/3+1 confirmations and one of its successive
+blocks Y has 2/3+1 confirmations, the block X is assumed to be final.
 
 
+## Microforks handling
+
+Microforks are typically happening as a result of either an error in
+configuration that leads to double producing, or because of internet
+congestion and late arrival of the last block to the next producer in
+schedule.
+
+Once a node sees a new version of a block at specific height, and if
+the block has a valid chain of parents toward the last irreversible
+block, the node switches to this new fork. The old version is kept in
+the cache, as there might be a consensus condition that endorses the
+older version.
+
+Once a node sees that a block in an alternative fork has reached the
+finality, it rolls back to up the common parent and adopts the final
+branch, down to the last known head block.
 
 
 ## Conclusion
 
-It is possible to upgrade the EOSIO consensus protocol, so that the
-last irreversible block is within 1 second from the current head block
-in normal circumstances, and up to a few seconds in case of a server
-outage or internet connectivity problems.
+With the proposed protocol upgrade, an EOSIO blockchain can reach
+sub-second finality if no microforks occur, and the network is fast
+and reliable: once the block is signed, confirmations would arrive
+within 200ms, and one more block is needed with confirmations. So,
+700ms finality is achievable in good internet conditions.
 
+If a small microfork occurs (1-2 blocks deep), the finality is delayed
+for about a second.
 
+One interesting side effect of the new protocol is that there can be
+much more than 21 active producer, still resulting in finality within
+a few seconds. The finality is only limited by internet throughput and
+available processing power on the nodes.
+
+The software needs a change in blocks log format, which means a need
+for a full replay before the blockchain can switch to the new
+protocol. Upgraded nodes can co-exist in the old blockchain, as the
+finality algorithm is the same as before in the absence of block
+confirmations.
 
 
 
 
 ## Copyright and License
 
-Copyright 2021-2022 cc32d9@gmail.com
+Copyright 2022 cc32d9@gmail.com
 
 This work is licensed under a Creative Commons Attribution 4.0
 International License.
