@@ -59,7 +59,7 @@ once they receive it, validate it and proceed as follows:
   head block, but do not send any confirmation. The previous version
   of a block is stored in a temporary cache.
 
-Once a block X has got 2/3+1 confirmations and one of its successive
+Once a block X has got 2/3+1 confirmations and one of its descendant
 blocks Y has 2/3+1 confirmations, the block X is assumed to be final.
 
 
