@@ -13,7 +13,8 @@ approximately 1 second if no network perturbation occurs), while keeping Byzanti
 fault tolerance (surviving up to 1/3-1 of active block producers
 acting randomly or abusively).
 
-ClarionOS team has published an [enhancement for the consensus
+Steven Watanabe from ClarionOS team has published an [enhancement for
+the consensus
 algorithm](https://edenos.notion.site/Fixing-Consensus-and-Improving-Irreversibility-44b3e92abeca4da0a07c0167287a6945),
 and this document covers its application to EOSIO blockchain.
 
@@ -34,10 +35,15 @@ validity:
 Once the message is received and validated, it's stored in the blocks
 log alongside the blocks. This needs a change in blocks log format.
 
+The node re-broadcasts the confirmations to its p2p peers. As the
+messages are short (about 150 bytes), the p2p plugin should be able to
+pack several outgoing confirmations in a single TCP packet for better
+efficiency.
+
 Each node keeps all recent confirmations in memory until the
 corresponding blocks are recognized as final.
 
-A block signed is treated as an implicit confirmation by the block
+A signed block is treated as an implicit confirmation by the block
 signor.
 
 
@@ -81,13 +87,21 @@ With the proposed protocol upgrade, an EOSIO blockchain can reach
 sub-second finality if no microforks occur, and the network is fast
 and reliable: once the block is signed, confirmations would arrive
 within 200ms, and one more block is needed with confirmations. So,
-700ms finality is achievable in good internet conditions.
+700ms finality (after the block is signed) is achievable in good
+internet conditions. That gives 1-1.5s finality for a transaction
+after it's signed and sent to an API node.
 
 If a small microfork occurs (1-2 blocks deep), the finality is delayed
 for about a second.
 
+The overhead of receiving 20 confirmations per block, at 150 bytes per
+confirmation, is 48 kilobit per second, which is completely affordable
+in current internet infrastructure. A typical node on a busy blockchain
+is currently consuming up to 30 megabit per second of internet
+bandwidth on its p2p communication.
+
 One interesting side effect of the new protocol is that there can be
-much more than 21 active producer, still resulting in finality within
+much more than 21 active producers, still resulting in finality within
 a few seconds. The finality is only limited by internet throughput and
 available processing power on the nodes.
 
